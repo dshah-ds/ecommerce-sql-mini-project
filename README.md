@@ -31,12 +31,12 @@ products ──< product_reviews >── customers
 
 | Table | Description |
 |---|---|
-| `customers` | 30 customers with name, email, phone, city |
-| `products` | 20 products across 7 categories with price & stock |
-| `orders` | 40 orders with status and total amount |
-| `order_items` | Line items linking orders to products |
-| `payments` | Payment records with method (UPI, Card, COD, etc.) |
-| `product_reviews` | Customer ratings and reviews per product |
+| `customers` | 30 customers |
+| `products` | 50 products |
+| `orders` | 400 orders |
+| `order_items` | 1201 Line items linking orders to products |
+| `payments` | 400 Payment records with method (UPI, Card, COD, etc.) |
+| `product_reviews` | 50 Customer ratings and reviews per product |
 
 ---
 
