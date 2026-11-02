@@ -35,7 +35,7 @@ products ──< product_reviews >── customers
 | `products` | 50 products |
 | `orders` | 400 orders |
 | `order_items` | 1201 Line items linking orders to products |
-| `payments` | 400 Payment records with method (UPI, Card, COD, etc.) |
+| `payments` | 400 Payment records with method (Credit Card, Debit Card, Net Banking, UPI) |
 | `product_reviews` | 50 Customer ratings and reviews per product |
 
 ---
@@ -143,7 +143,8 @@ ORDER BY customer_id, total_amount;
 
 ## 📝 Notes
 
-- All queries are written for **MySQL 8.0**. MySQL does not natively support `INTERSECT` — Level 6 demonstrates a clean workaround using `AND` with subqueries.
+- All queries are written for **MySQL 8.0**. Level 6 writes `INTERSECT` as two `IN` subqueries joined by `AND`, which works on every MySQL version. (MySQL added native `INTERSECT` and `EXCEPT` in 8.0.31.)
+- Level 3 Q2 ("total revenue") sums **all** orders, as the question asks — including 99 cancelled orders, which still have full payment records because refunds aren't modelled in this dataset. Excluding them (`WHERE status <> 'Cancelled'`) gives 5,309,237.04 instead of 6,960,973.66.
 - Every query includes a **business context comment** explaining the real-world use case.
 - Queries reference the `miniProject` database — the schema file handles `CREATE DATABASE` and `USE miniProject` automatically.
 

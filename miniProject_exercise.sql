@@ -167,6 +167,9 @@ SELECT *
 SELECT SUM(total_amount) AS total_revenue
 	FROM orders; -- To sum all the amounts in total_amount column of all orders to get total revenue.
 
+-- Note: this sums every order, including the 99 cancelled ones (they still have full payments here).
+-- Revenue excluding cancellations: SELECT SUM(total_amount) FROM orders WHERE status <> 'Cancelled';
+
 -- 3. Calculate the average order value
 -- Used for understanding customer spending patterns.
 
@@ -213,7 +216,7 @@ SELECT *
 	FROM order_items; -- To check the order_items table and to correlate products and order_items table
 SELECT p.category, SUM(oi.quantity) AS total_products -- To get two columns - categories and the total number of items using SUM of quantities sold as order_items.
 	FROM products AS p
-    JOIN -- Using left join as we are getting categories from products table
+    JOIN -- Inner join: only products that appear in order_items are counted
     order_items AS oi
     ON p.product_id = oi.product_id -- correlating tables using product_id column in both tables
     GROUP BY p.category; -- Grouping by categories to get the total quantity of items sold per category
@@ -324,7 +327,7 @@ SELECT p.payment_date, p.amount_paid, p.method, o.order_date, o.status, o.total_
 -- Used for detailed transaction reports.
 
 SELECT c.customer_id, c.name, c.email, c.phone, o.order_id, o.order_date, o.status, o.total_amount, p.payment_id, p.payment_date, p.amount_paid, p.method
-	FROM customers AS C
+	FROM customers AS c -- lowercase alias to match c. below (aliases are case-sensitive on Linux MySQL)
     JOIN 
     orders AS o
     ON c.customer_id = o.customer_id
@@ -454,7 +457,8 @@ SELECT *
     -- Hence performing UNION between distinct customer id's in orders and product reviews.
     -- This is OR operator.
 
--- 2. List all customers who have placed an order as well as reviewed a product [intersect not supported]
+-- 2. List all customers who have placed an order as well as reviewed a product
+-- [written with AND + subqueries so it runs on any MySQL version; native INTERSECT exists from MySQL 8.0.31]
 -- Used to identify highly engaged customers for rewards.
 
 SELECT *

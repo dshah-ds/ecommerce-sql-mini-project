@@ -79,6 +79,6 @@ All 42 questions answered in `miniProject_exercise.sql`, organized by level of d
 ## 📌 Notes
 
 - All queries use the `miniProject` database.
-- MySQL does not natively support `INTERSECT` — Level 6 Q2 demonstrates how to replicate it using `AND` with subqueries.
+- Level 6 Q2 writes `INTERSECT` as `AND` with two subqueries, which works on every MySQL version (native `INTERSECT` arrived in MySQL 8.0.31).
 - The `DISTINCT` keyword is used throughout to avoid double-counting.
 - Correlated subqueries (Level 5 Q3, Q6) reference the outer query's table using an alias.
